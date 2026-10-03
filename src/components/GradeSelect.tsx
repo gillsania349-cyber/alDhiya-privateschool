@@ -38,7 +38,7 @@ export default function GradeSelect({
       }
     };
 
-    const onKeyDown = (event: KeyboardEvent) => {
+    const onKeyDown = (event: globalThis.KeyboardEvent) => {
       if (event.key === "Escape") setOpen(false);
     };
 
