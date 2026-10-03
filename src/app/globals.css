@@ -1,0 +1,126 @@
+@import "tailwindcss";
+
+:root {
+  --navy: #0b1f4d;
+  --navy-deep: #081636;
+  --gold: #d4a017;
+  --gold-soft: #e8b84a;
+  --slate: #1e447c;
+  --bg: #ffffff;
+  --bg-soft: #ffffff;
+}
+
+@theme inline {
+  --color-navy: var(--navy);
+  --color-navy-deep: var(--navy-deep);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-slate: var(--slate);
+  --color-background: var(--bg);
+  --color-foreground: var(--navy);
+  --font-sans: var(--font-jakarta);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--navy);
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes whatsapp-pop {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.7s ease-out both;
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float 5.5s ease-in-out 0.6s infinite;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  border-radius: 9999px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link--active::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-fade-up,
+  .animate-float,
+  .animate-float-delayed {
+    animation: none;
+  }
+
+  .nav-link::after {
+    transition: none;
+  }
+}
+
+@media (max-width: 379px) {
+  .animate-float {
+    animation: none;
+  }
+}
