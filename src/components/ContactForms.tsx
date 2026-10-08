@@ -5,7 +5,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import GradeSelect from "@/components/GradeSelect";
 
 type InquiryType = "general" | "admissions";
-type Status = "idle" | "loading" | "success" | "error";
+type Status = "idle" | "success";
 
 const grades = [
   "KG 1",
@@ -37,7 +37,6 @@ export default function ContactForms() {
 
   const [type, setType] = useState<InquiryType>("general");
   const [status, setStatus] = useState<Status>("idle");
-  const [feedback, setFeedback] = useState("");
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -59,7 +58,6 @@ export default function ContactForms() {
     setGrade("");
     setPreferredStartDate("");
     setStatus("idle");
-    setFeedback("");
   }, [type]);
 
   const selectType = (next: InquiryType) => {
@@ -95,51 +93,10 @@ export default function ContactForms() {
     setPreferredStartDate("");
   };
 
-  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setStatus("loading");
-    setFeedback("");
-
-    const payload =
-      type === "general"
-        ? { type, name, email, phone, message }
-        : {
-            type,
-            name,
-            email,
-            phone,
-            message: message || undefined,
-            childAge,
-            grade,
-            preferredStartDate,
-          };
-
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      const data = (await response.json()) as {
-        ok?: boolean;
-        message?: string;
-        error?: string;
-      };
-
-      if (!response.ok || !data.ok) {
-        setStatus("error");
-        setFeedback(data.error || "Something went wrong. Please try again.");
-        return;
-      }
-
-      setStatus("success");
-      resetForm();
-    } catch {
-      setStatus("error");
-      setFeedback(
-        "We could not send your inquiry right now. Please try again or call +968 9588 2848.",
-      );
-    }
+    setStatus("success");
+    resetForm();
   };
 
   return (
@@ -180,7 +137,6 @@ export default function ContactForms() {
       <form
         onSubmit={onSubmit}
         className="mt-6 space-y-5 rounded-[1.75rem] border border-navy/10 bg-white p-5 shadow-[0_24px_60px_-36px_rgba(11,31,77,0.45)] sm:p-8"
-        noValidate
       >
         <div className="border-b border-navy/8 pb-5">
           <div className="inline-flex items-center gap-2 rounded-full bg-gold/12 px-3 py-1 text-[11px] font-bold tracking-[0.14em] text-navy uppercase">
@@ -323,36 +279,24 @@ export default function ContactForms() {
           </div>
         </div>
 
-        {status === "error" && feedback && (
-          <div
-            role="alert"
-            className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3.5 text-[13.5px] leading-relaxed text-red-800"
-          >
-            {feedback}
-          </div>
-        )}
-
         <div className="flex flex-col gap-3 border-t border-navy/8 pt-5 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-[12.5px] leading-relaxed text-slate/80">
             We usually reply during school hours, Sunday–Thursday.
           </p>
           <button
             type="submit"
-            disabled={status === "loading"}
             className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-navy px-7 py-3.5 text-[15px] font-bold text-white shadow-[0_14px_30px_-16px_rgba(11,31,77,0.85)] transition hover:bg-navy-deep hover:shadow-[0_18px_34px_-14px_rgba(11,31,77,0.9)] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto sm:min-w-[190px]"
           >
-            {status === "loading" ? "Sending…" : "Send inquiry"}
-            {status !== "loading" && (
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M5 12h14M13 6l6 6-6 6"
-                  stroke="#d4a017"
-                  strokeWidth="2.2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            )}
+            Send inquiry
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M5 12h14M13 6l6 6-6 6"
+                stroke="#d4a017"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
           </button>
         </div>
       </form>
