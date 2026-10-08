@@ -148,6 +148,12 @@ export default function Footer() {
                 +968 9588 2848
               </a>
               <a
+                href="mailto:Zainab.aldhiya@gmail.com"
+                className="block break-all transition hover:text-gold"
+              >
+                Zainab.aldhiya@gmail.com
+              </a>
+              <a
                 href="/contact"
                 className="block font-semibold text-navy transition hover:text-gold"
               >

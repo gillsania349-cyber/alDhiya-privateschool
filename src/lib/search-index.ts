@@ -74,7 +74,7 @@ export const searchIndex: SearchItem[] = [
     id: "contact",
     title: "Contact",
     description:
-      "General and admissions inquiry forms. Call +968 9588 2848 or visit us in Salalah.",
+      "General and admissions inquiry forms. Call +968 9588 2848, email Zainab.aldhiya@gmail.com, or visit us in Salalah.",
     href: "/contact",
     section: "Pages",
     keywords: ["inquiry", "email", "phone", "location", "map", "salalah", "get in touch"],
@@ -242,7 +242,7 @@ export const searchIndex: SearchItem[] = [
     id: "location",
     title: "School location — Salalah",
     description:
-      "P.O.Box 1735, Postal Code 211, Salalah, Sultanate of Oman. Phone +968 9588 2848.",
+      "P.O.Box 1735, Postal Code 211, Salalah, Sultanate of Oman. Phone +968 9588 2848. Email Zainab.aldhiya@gmail.com.",
     href: "/contact",
     section: "Contact",
     keywords: ["address", "map", "oman", "salalah", "location", "directions"],

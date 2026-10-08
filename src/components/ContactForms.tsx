@@ -71,6 +71,15 @@ export default function ContactForms() {
     router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
   };
 
+  useEffect(() => {
+    if (status !== "success") return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setStatus("idle");
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [status]);
+
   const heading = useMemo(
     () => (type === "admissions" ? "Admissions inquiry" : "General inquiry"),
     [type],
@@ -124,10 +133,6 @@ export default function ContactForms() {
       }
 
       setStatus("success");
-      setFeedback(
-        data.message ||
-          "Thank you — your inquiry has been sent to the school.",
-      );
       resetForm();
     } catch {
       setStatus("error");
@@ -318,14 +323,10 @@ export default function ContactForms() {
           </div>
         </div>
 
-        {feedback && (
+        {status === "error" && feedback && (
           <div
-            role="status"
-            className={`rounded-2xl px-4 py-3.5 text-[13.5px] leading-relaxed ${
-              status === "success"
-                ? "border border-emerald-200 bg-emerald-50 text-emerald-800"
-                : "border border-red-200 bg-red-50 text-red-800"
-            }`}
+            role="alert"
+            className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3.5 text-[13.5px] leading-relaxed text-red-800"
           >
             {feedback}
           </div>
@@ -355,6 +356,51 @@ export default function ContactForms() {
           </button>
         </div>
       </form>
+
+      {status === "success" && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-navy/50 p-4 backdrop-blur-sm"
+          onClick={() => setStatus("idle")}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="inquiry-success-title"
+            className="w-full max-w-sm animate-[whatsapp-pop_220ms_ease-out] rounded-[1.75rem] bg-white p-7 text-center shadow-[0_24px_60px_-20px_rgba(11,31,77,0.6)]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gold/15">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M5 12.5l4.5 4.5L19 7.5"
+                  stroke="#d4a017"
+                  strokeWidth="2.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+            <h3
+              id="inquiry-success-title"
+              className="mt-4 font-[family-name:var(--font-poppins)] text-xl font-bold tracking-[-0.02em] text-navy"
+            >
+              Submitted successfully
+            </h3>
+            <p className="mt-2 text-[14px] leading-relaxed text-slate">
+              Your information has been submitted. Our team will get back to
+              you soon.
+            </p>
+            <button
+              type="button"
+              autoFocus
+              onClick={() => setStatus("idle")}
+              className="mt-6 w-full rounded-2xl bg-navy px-6 py-3 text-[15px] font-bold text-white transition hover:bg-navy-deep"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

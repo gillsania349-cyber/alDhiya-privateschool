@@ -43,6 +43,13 @@ export default function ContactPage() {
                   className="font-semibold text-navy underline decoration-gold/50 underline-offset-2 hover:decoration-gold"
                 >
                   +968 9588 2848
+                </a>{" "}
+                or email{" "}
+                <a
+                  href="mailto:Zainab.aldhiya@gmail.com"
+                  className="font-semibold text-navy underline decoration-gold/50 underline-offset-2 hover:decoration-gold"
+                >
+                  Zainab.aldhiya@gmail.com
                 </a>
                 .
               </p>

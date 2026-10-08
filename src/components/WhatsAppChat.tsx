@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useState } from "react";
 
-const WHATSAPP_NUMBER = "96895882848";
+const WHATSAPP_NUMBER = "96899858378";
 const WHATSAPP_MESSAGE =
   "Assalamu Alaikum, I would like to inquire about Al Dhiya International Private School.";
 
@@ -87,7 +87,7 @@ export default function WhatsAppChat() {
               Chat on WhatsApp
             </a>
             <p className="mt-2 text-center text-[11px] text-slate">
-              +968 9588 2848
+              +968 9985 8378
             </p>
           </div>
         </div>
